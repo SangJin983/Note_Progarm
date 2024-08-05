@@ -1,5 +1,6 @@
 const $exportButton = document.querySelector(".add-note-btn");
 const $noteInput = document.querySelector(".note-input");
+const $noteListContainer = document.querySelector(".notes-container");
 
 /* html element에 해당하는 변수에는 $ 접두어나 elem 접미어를 넣는 관행이 있다. */
 /* 변수명 바꿀때는 F2 눌러서 한 번에 바꾸는게 쓰기 좋다. */
@@ -15,15 +16,20 @@ function addNote() {
 
   const $noteContainer = document.createElement("div");
   $noteContainer.classList.add("note");
-  $noteContainer.innerHTML = `
-    <p>${noteContent}</p>
-    <button onclick="deleteNote(this)">❌</button>
-  `;
 
-  document.querySelector(".notes-container").appendChild($noteContainer);
-  document.querySelector(".note-input").value = "";
+  const $note = document.createElement("p");
+  $note.textContent = noteContent;
+  $noteContainer.append($note);
+
+  const $deleteButton = document.createElement("button");
+  $deleteButton.textContent = "❌";
+  $deleteButton.onclick = deleteNote;
+  $noteContainer.append($deleteButton);
+
+  $noteListContainer.append($noteContainer);
+  $noteInput.value = "";
 }
 
-function deleteNote(button) {
-  button.parentElement.remove();
+function deleteNote(event) {
+  event.target.parentElement.remove();
 }
