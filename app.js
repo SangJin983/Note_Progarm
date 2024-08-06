@@ -17,7 +17,7 @@ function addNote() {
   const $noteContainer = document.createElement("div");
   $noteContainer.classList.add("note");
 
-  const $note = document.createElement("p");
+  const $note = document.createElement("pre");
   $note.textContent = noteContent;
   $noteContainer.append($note);
 
