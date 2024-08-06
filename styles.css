@@ -7,7 +7,7 @@ body {
 
 pre {
 font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
-overflow-x: auto;
+white-space: pre-wrap;
 }
 
 .app {
