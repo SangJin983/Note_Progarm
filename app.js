@@ -24,8 +24,8 @@ function addNote() {
   const $editButton = document.createElement("button");
   $editButton.textContent = "✏️";
   $editButton.classList.add("edit-button");
-  $editButton.addEventListener("click", editNote)
-  $noteContainer.append($editButton)
+  $editButton.addEventListener("click", () => editNoteMode($noteContainer));
+  $noteContainer.append($editButton);
 
   const $deleteButton = document.createElement("button");
   $deleteButton.textContent = "❌";
@@ -41,11 +41,39 @@ function deleteNote(event) {
   event.target.parentElement.remove();
 }
 
-function editNote(event) {
-  const $noteContainer = event.target.parentElement; // 다른 함수에 같은 변수명을 쓰는 건 상관없음.
+function editNoteMode($noteContainer) {
   const $note = $noteContainer.querySelector("pre");
-  const editContent = prompt("메모를 편집하세요", $note.textContent);
-  if (editContent !== null) {
-    $note.textContent = editContent;
-  }
+  const noteContent = $note.textContent;
+  $noteContainer.innerHTML = "";
+
+  const $textarea = document.createElement("textarea");
+  $textarea.value = noteContent;
+  $noteContainer.append($textarea);
+
+  const $saveButton = document.createElement("button");
+  $saveButton.textContent = "💾";
+  $saveButton.classList.add("save-button");
+  $saveButton.addEventListener("click", () => saveNoteEdit($noteContainer, $textarea));
+  $noteContainer.append($saveButton);
+}
+
+function saveNoteEdit($noteContainer, $textarea) {
+  newContent = $textarea.value;
+  $noteContainer.innerHTML = "";
+
+  const $note = document.createElement("pre");
+  $note.textContent = newContent;
+  $noteContainer.append($note);
+
+  const $editButton = document.createElement("button");
+  $editButton.textContent = "✏️";
+  $editButton.classList.add("edit-button");
+  $editButton.addEventListener("click", () => editNoteMode($noteContainer));
+  $noteContainer.append($editButton);
+
+  const $deleteButton = document.createElement("button");
+  $deleteButton.textContent = "❌";
+  $deleteButton.classList.add("delete-button");
+  $deleteButton.onclick = deleteNote;
+  $noteContainer.append($deleteButton);
 }
