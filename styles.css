@@ -55,12 +55,20 @@ h1 {
 }
 
 .note button {
-  position: absolute;
-  top: 0;
-  right: 0;
   background: none;
   border: none;
   cursor: pointer;
+  position: absolute;
+}
+
+.note button.edit-button {
+  top: 5px;
+  right: 35px;
+}
+
+.note button.delete-button {
+  top: 5px;
+  right: 5px;
 }
 
 .note button:hover {

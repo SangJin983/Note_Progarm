@@ -21,9 +21,16 @@ function addNote() {
   $note.textContent = noteContent;
   $noteContainer.append($note);
 
+  const $editButton = document.createElement("button");
+  $editButton.textContent = "✏️";
+  $editButton.classList.add("edit-button");
+  $editButton.addEventListener("click", editNote)
+  $noteContainer.append($editButton)
+
   const $deleteButton = document.createElement("button");
   $deleteButton.textContent = "❌";
   $deleteButton.onclick = deleteNote;
+  $deleteButton.classList.add("delete-button");
   $noteContainer.append($deleteButton);
 
   $noteListContainer.append($noteContainer);
@@ -32,4 +39,13 @@ function addNote() {
 
 function deleteNote(event) {
   event.target.parentElement.remove();
+}
+
+function editNote(event) {
+  const $noteContainer = event.target.parentElement; // 다른 함수에 같은 변수명을 쓰는 건 상관없음.
+  const $note = $noteContainer.querySelector("pre");
+  const editContent = prompt("메모를 편집하세요", $note.textContent);
+  if (editContent !== null) {
+    $note.textContent = editContent;
+  }
 }
