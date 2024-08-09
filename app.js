@@ -21,9 +21,16 @@ function addNote() {
   $note.textContent = noteContent;
   $noteContainer.append($note);
 
+  const $editButton = document.createElement("button");
+  $editButton.textContent = "✏️";
+  $editButton.classList.add("edit-button");
+  $editButton.addEventListener("click", () => editNoteMode($noteContainer));
+  $noteContainer.append($editButton);
+
   const $deleteButton = document.createElement("button");
   $deleteButton.textContent = "❌";
   $deleteButton.onclick = deleteNote;
+  $deleteButton.classList.add("delete-button");
   $noteContainer.append($deleteButton);
 
   $noteListContainer.append($noteContainer);
@@ -32,4 +39,41 @@ function addNote() {
 
 function deleteNote(event) {
   event.target.parentElement.remove();
+}
+
+function editNoteMode($noteContainer) {
+  const $note = $noteContainer.querySelector("pre");
+  const noteContent = $note.textContent;
+  $noteContainer.innerHTML = "";
+
+  const $textarea = document.createElement("textarea");
+  $textarea.value = noteContent;
+  $noteContainer.append($textarea);
+
+  const $saveButton = document.createElement("button");
+  $saveButton.textContent = "💾";
+  $saveButton.classList.add("save-button");
+  $saveButton.addEventListener("click", () => saveNoteEdit($noteContainer, $textarea));
+  $noteContainer.append($saveButton);
+}
+
+function saveNoteEdit($noteContainer, $textarea) {
+  newContent = $textarea.value;
+  $noteContainer.innerHTML = "";
+
+  const $note = document.createElement("pre");
+  $note.textContent = newContent;
+  $noteContainer.append($note);
+
+  const $editButton = document.createElement("button");
+  $editButton.textContent = "✏️";
+  $editButton.classList.add("edit-button");
+  $editButton.addEventListener("click", () => editNoteMode($noteContainer));
+  $noteContainer.append($editButton);
+
+  const $deleteButton = document.createElement("button");
+  $deleteButton.textContent = "❌";
+  $deleteButton.classList.add("delete-button");
+  $deleteButton.onclick = deleteNote;
+  $noteContainer.append($deleteButton);
 }
