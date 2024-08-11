@@ -1,3 +1,8 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+
+})
+
 const $exportButton = document.querySelector(".add-note-btn");
 const $noteInput = document.querySelector(".note-input");
 const $noteListContainer = document.querySelector(".notes-container");
@@ -34,7 +39,15 @@ function addNote() {
   $noteContainer.append($deleteButton);
 
   $noteListContainer.append($noteContainer);
+  saveNotesToLocalStorage();
   $noteInput.value = "";
+}
+
+function saveNotesToLocalStorage() {
+  const notes = [];
+  const $allNotes = document.querySelectorAll(".note pre");
+  $allNotes.forEach($note => notes.push($note.textContent));
+  localStorage.setItem("notes", JSON.stringify(notes));
 }
 
 function deleteNote(event) {
