@@ -1,7 +1,28 @@
 document.addEventListener("DOMContentLoaded", () => {
   const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+  savedNotes.forEach(noteContent => {
+    const $noteContainer = document.createElement("div");
+    $noteContainer.classList.add("note");
 
-})
+    const $note = document.createElement("pre");
+    $note.textContent = noteContent;
+    $noteContainer.append($note);
+
+    const $editButton = document.createElement("button");
+    $editButton.textContent = "✏️";
+    $editButton.classList.add("edit-button");
+    $editButton.addEventListener("click", () => editNoteMode($noteContainer));
+    $noteContainer.append($editButton);
+
+    const $deleteButton = document.createElement("button");
+    $deleteButton.textContent = "❌";
+    $deleteButton.onclick = deleteNote;
+    $deleteButton.classList.add("delete-button");
+    $noteContainer.append($deleteButton);
+
+    $noteListContainer.append($noteContainer);
+  });
+});
 
 const $exportButton = document.querySelector(".add-note-btn");
 const $noteInput = document.querySelector(".note-input");
@@ -52,6 +73,7 @@ function saveNotesToLocalStorage() {
 
 function deleteNote(event) {
   event.target.parentElement.remove();
+  saveNotesToLocalStorage();
 }
 
 function editNoteMode($noteContainer) {
@@ -89,4 +111,6 @@ function saveNoteEdit($noteContainer, $textarea) {
   $deleteButton.classList.add("delete-button");
   $deleteButton.onclick = deleteNote;
   $noteContainer.append($deleteButton);
+
+  saveNotesToLocalStorage();
 }
