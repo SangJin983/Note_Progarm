@@ -76,9 +76,8 @@ function enterEditMode($noteContainer) {
 
   function handleSaveClick() {
     const newContent = $textarea.value;
-    $noteContainer.remove();
-    const $newNoteCotainer = createNoteElem(newContent);
-    $noteListContainer.append($newNoteCotainer);
+    const $newNoteContainer = createNoteElem(newContent);
+    $noteListContainer.replaceChild($newNoteContainer, $noteContainer);
     saveNotesToLocalStorage();
   }
 
