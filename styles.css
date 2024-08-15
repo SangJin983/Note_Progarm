@@ -71,10 +71,6 @@ h1 {
   right: 5px;
 }
 
-.note button:hover {
-  color: red;
-}
-
 .note textarea {
   width: 100%;
   max-width: 100%;
@@ -84,6 +80,6 @@ h1 {
 
 .note button.save-button {
   display: block;
-  margin-top: 5px;
+  margin-top: 0;
   right: 0;
 }
