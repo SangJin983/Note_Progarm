@@ -118,6 +118,7 @@ function backupNotes() {
   const notes = JSON.parse(localStorage.getItem("notes")) || [];
   const blob = createBlobFromNotes(notes);
   downloadBlob(blob, "notes_backup.json");
+  location.reload();
 }
 
 function restore(event) {
