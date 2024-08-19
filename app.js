@@ -20,7 +20,7 @@ const $fileInput = document.querySelector(".file-input");
 $addNoteButton.onclick = addNote; // addNote()로 하면, 반환한 값을 저장하게 된다.
 $backupButton.addEventListener("click", backupNotes);
 $restoreButton.addEventListener("click", () => $fileInput.click());
-$fileInput.addEventListener("change", restore)
+$fileInput.addEventListener("change", restore);
 
 function createNoteElem(noteContent) {
   const $noteContainer = document.createElement("div");
@@ -116,9 +116,12 @@ function downloadBlob(blob, filename) {
 
 function backupNotes() {
   const notes = JSON.parse(localStorage.getItem("notes")) || [];
-  const blob = createBlobFromNotes(notes);
-  downloadBlob(blob, "notes_backup.json");
-  location.reload();
+  const filename = prompt("백업파일의 이름을 정하세요:", "note_backup.json");
+  if (filename) {
+    const blob = createBlobFromNotes(notes);
+    downloadBlob(blob, filename);
+    location.reload();
+  }
 }
 
 function restore(event) {
