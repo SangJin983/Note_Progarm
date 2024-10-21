@@ -52,6 +52,7 @@ h1 {
   margin: 10px 0;
   border-left: 5px solid #007bff;
   position: relative;
+  word-wrap: break-word; /* 긴 단어를 줄 바꿈 */
 }
 
 .note button {
