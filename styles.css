@@ -52,6 +52,7 @@ h1 {
   margin: 10px 0;
   border-left: 5px solid #007bff;
   position: relative;
+  word-wrap: break-word; /* 긴 단어를 줄 바꿈 */
 }
 
 .note button {
@@ -82,4 +83,25 @@ h1 {
   display: block;
   margin-top: 0;
   right: 0;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+/* 유틸리티 버튼을 화면 구석에 배치 */
+.utility-buttons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.utility-buttons button:hover {
+  opacity: 0.7;
 }

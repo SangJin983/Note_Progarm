@@ -10,10 +10,17 @@ const $addNoteButton = document.querySelector(".add-note-btn");
 const $noteInput = document.querySelector(".note-input");
 const $noteListContainer = document.querySelector(".notes-container");
 
+const $backupButton = document.querySelector(".backup-btn");
+const $restoreButton = document.querySelector(".restore-btn");
+const $fileInput = document.querySelector(".file-input");
+
 /* html element에 해당하는 변수에는 $ 접두어나 elem 접미어를 넣는 관행이 있다. */
 /* 변수명 바꿀때는 F2 눌러서 한 번에 바꾸는게 쓰기 좋다. */
 
 $addNoteButton.onclick = addNote; // addNote()로 하면, 반환한 값을 저장하게 된다.
+$backupButton.addEventListener("click", backupNotes);
+$restoreButton.addEventListener("click", () => $fileInput.click());
+$fileInput.addEventListener("change", restore);
 
 function createNoteElem(noteContent) {
   const $noteContainer = document.createElement("div");
@@ -86,4 +93,46 @@ function enterEditMode($noteContainer) {
   $saveButton.classList.add("save-button");
   $saveButton.addEventListener("click", handleSaveClick);
   $noteContainer.append($saveButton);
+}
+
+// JSON 객체를 blob으로 변환
+function createBlobFromNotes(notes) {
+  return new Blob([JSON.stringify(notes, null, 2)], {
+    type: "application/json",
+  });
+}
+
+// Blob을 다운로드 링크로 변환 후 파일을 다운로드 함
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.append(link);
+  link.click();
+  document.body.remove(link);
+  URL.revokeObjectURL(url);
+}
+
+function backupNotes() {
+  const notes = JSON.parse(localStorage.getItem("notes")) || [];
+  const filename = prompt("백업파일의 이름을 정하세요:", "note_backup.json");
+  if (filename) {
+    const blob = createBlobFromNotes(notes);
+    downloadBlob(blob, filename);
+    location.reload();
+  }
+}
+
+function restore(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const restoredNotes = JSON.parse(e.target.result);
+      localStorage.setItem("notes", JSON.stringify(restoredNotes));
+      location.reload();
+    };
+    reader.readAsText(file);
+  }
 }
